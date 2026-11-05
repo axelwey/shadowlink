@@ -1,0 +1,10 @@
+Command 'del' not found, did you mean:
+  command 'delv' from deb bind9-dnsutils
+  command 'dex' from deb dex
+  command 'wdel' from deb wput
+  command 'qdel' from deb slurm-wlm-torque
+  command 'dll' from deb brickos
+  command 'mdel' from deb mtools
+  command 'el' from deb oneliner-el
+  command 'diel' from deb detect-it-easy
+Try: sudo apt install <deb name>
