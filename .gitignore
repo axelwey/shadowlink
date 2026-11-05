@@ -1,7 +1,5 @@
-pycache, *.exe, nmap-output
 build/
 dist/
 *.spec
-*.exe
-cd
-doorgeef.txt
+*.pyc
+__pycache__/
